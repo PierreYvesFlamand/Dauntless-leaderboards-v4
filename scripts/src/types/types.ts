@@ -39,6 +39,7 @@ export type GAUNTLET_SEASON = {
 
 export type GAUNTLET_SEASON_LEADERBOARD_ITEM = {
     guildId: number
+    guildNameTag?: string
     rank: number
     level: number
     remainingSec: number
@@ -192,7 +193,6 @@ export type ALL_DATA = {
     trials: TRIAL[]
     behemoths: BEHEMOTH[]
     players: PLAYER[]
-    playersData: PLAYER_DATA[]
     platforms: PLATFORM[]
     roles: ROLE[]
     weapons: WEAPON[]
