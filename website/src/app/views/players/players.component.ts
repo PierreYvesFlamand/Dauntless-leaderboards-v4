@@ -1,7 +1,6 @@
 import { AfterViewInit, Component } from '@angular/core';
 import { SharedService } from '../../services/shared.service';
-import { DatabaseService } from '../../services/database.service';
-import { API_PLAYER_LIST, PLAYER_LIST_ITEM } from '../../../../../backend/src/types/types';
+import { DatabaseService, WEBSITE_PLAYER } from '../../services/database.service';
 import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
 
 @Component({
@@ -16,14 +15,14 @@ export class PlayersComponent implements AfterViewInit {
     public sharedService: SharedService,
     public databaseService: DatabaseService
   ) {
-    this.textSearchUpdate.pipe(debounceTime(1250), distinctUntilChanged()).subscribe(this.applyFilter.bind(this));
+    this.textSearchUpdate.pipe(debounceTime(0), distinctUntilChanged()).subscribe(this.applyFilter.bind(this));
   }
 
   ngAfterViewInit(): void {
     this.applyFilter();
   }
 
-  public players: PLAYER_LIST_ITEM[] = [];
+  public players: WEBSITE_PLAYER[] = [];
   public total: number = 0;
   public isLoading: boolean = true;
   public filters: {
@@ -39,10 +38,36 @@ export class PlayersComponent implements AfterViewInit {
     };
 
   public async applyFilter() {
+    
     this.players = [];
     this.isLoading = true;
-    const paramsAsString = Object.keys(this.filters).reduce<string[]>((p, k) => { return [...p, `${k}=${(<any>this.filters)[k] || ''}`] }, []).join('&');
-    const response = await this.databaseService.fetch<API_PLAYER_LIST>(`players?${paramsAsString}`);
+
+    let response = {
+      data: this.databaseService.data.players,
+      total: 0
+    };
+
+    response.data = response.data.filter(r => r.playerNames.map(n=>n.name).join('').toLowerCase().includes(this.filters.textSearch.toLowerCase()));
+
+    response.data.sort((a, b) => {
+      let val1, val2;
+      switch (this.filters.orderByField) {
+        case 'nbrSoloTop1': val1 = a.nbrSoloTop1; val2 = b.nbrSoloTop1; break;
+        case 'nbrSoloTop5': val1 = a.nbrSoloTop5; val2 = b.nbrSoloTop5; break;
+        case 'nbrSoloTop100': val1 = a.nbrSoloTop100; val2 = b.nbrSoloTop100; break;
+        case 'nbrGroupTop1': val1 = a.nbrGroupTop1; val2 = b.nbrGroupTop1; break;
+        case 'nbrGroupTop5': val1 = a.nbrGroupTop5; val2 = b.nbrGroupTop5; break;
+        case 'nbrGroupTop100': val1 = a.nbrGroupTop100; val2 = b.nbrGroupTop100; break;
+        default: val1 = a.nbrSoloTop1; val2 = b.nbrSoloTop1;
+      }
+
+      if (this.filters.orderByDirection === 'ASC' && this.filters.orderByField) return val1 - val2;
+      else return val2 - val1;
+    });
+
+    response.total = response.data.length;
+    response.data = response.data.slice(0 + (this.filters.page - 1) * 20, 20 + (this.filters.page - 1) * 20);
+
     if (!response) return;
     this.isLoading = false;
     this.players = response.data;

@@ -33,7 +33,7 @@ export class GuildsComponent implements AfterViewInit {
       page: 1
     };
 
-  public async applyFilter() {    
+  public async applyFilter() {
     this.guilds = [];
     this.isLoading = true;
 
@@ -43,8 +43,20 @@ export class GuildsComponent implements AfterViewInit {
     };
 
     response.data = response.data.filter(r => r.name.toLowerCase().includes(this.filters.textSearch.toLowerCase()));
+
     response.data.sort((a, b) => {
-      return b.rating - a.rating;
+      let val1, val2;
+      switch (this.filters.orderByField) {
+        case 'rating': val1 = a.rating; val2 = b.rating; break;
+        case 'nbrTop1': val1 = a.nbrTop1; val2 = b.nbrTop1; break;
+        case 'nbrTop5': val1 = a.nbrTop5; val2 = b.nbrTop5; break;
+        case 'nbrTop100': val1 = a.nbrTop100; val2 = b.nbrTop100; break;
+        case 'totalLevelCleared': val1 = a.totalLevelCleared; val2 = b.totalLevelCleared; break;
+        default: val1 = a.rating; val2 = b.rating;
+      }
+
+      if (this.filters.orderByDirection === 'ASC' && this.filters.orderByField) return val1 - val2;
+      else return val2 - val1;
     });
 
     response.total = response.data.length;

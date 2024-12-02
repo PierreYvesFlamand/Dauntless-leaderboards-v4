@@ -363,5 +363,7 @@ const behemothRotationHistory = [
     BEHEMOTH.Deadeye_Quillshot,
     BEHEMOTH.Frostback_Pangar,
     BEHEMOTH.Razorwing_Kharabak,
-    BEHEMOTH.Shadowtouched_Drask
+    BEHEMOTH.Shadowtouched_Drask,
+    BEHEMOTH.Moonreaver_Shrike,
+    BEHEMOTH.Thunderdeep_Drask
 ];

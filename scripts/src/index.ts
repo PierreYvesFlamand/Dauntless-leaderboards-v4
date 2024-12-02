@@ -31,11 +31,16 @@ import { ALL_DATA, BEHEMOTH, GAUNTLET_SEASON, GUILD, GUILD_DATA, PLATFORM, PLAYE
         roles: JSON.parse(fs.readFileSync('../database/roles.json', 'utf8')) as ROLE[],
         weapons: JSON.parse(fs.readFileSync('../database/weapons.json', 'utf8')) as WEAPON[]
     };
+
     let allDataToText = JSON.stringify(allData);
     fs.writeFileSync('../database/allData.json', allDataToText);
     fs.writeFileSync('../website/public/data/allData.json', allDataToText);
     fs.writeFileSync('../database/allData.json.compressed', pako.deflate(allDataToText));
     fs.writeFileSync('../website/public/data/allData.json.compressed', pako.deflate(allDataToText));
+
+    const dataTimestamp = new Date().getTime();
+    fs.writeFileSync('../database/allDataVersion.json', JSON.stringify({ timestamp: dataTimestamp }));
+    fs.writeFileSync('../website/public/data/allDataVersion.json', JSON.stringify({ timestamp: dataTimestamp }));
 
     fs.writeFileSync('../website/public/data/versions.json', fs.readFileSync('../database/versions.json', 'utf8'));
 })();

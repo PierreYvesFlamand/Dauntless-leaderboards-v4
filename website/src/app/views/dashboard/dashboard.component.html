@@ -48,9 +48,54 @@
                     </table>
                 </div>
             </div>
-            <div class="card-footer d-flex">
+            <!-- <div class="card-footer d-flex">
                 <span class="badge badge-secondary ml-auto">Last updated at {{dashboardData.currentGauntletInfo.lastUpdated | date:'YYYY/MM/dd HH:mm'}}</span>
+            </div> -->
+        </div>
+    </div>
+    <div class="col-xl-6">
+        <div class="card">
+            <div class="card-header">
+                <div class="d-flex justify-content-between align-items-center flex-column flex-md-row">
+                    <h3 class="card-title d-flex align-items-center">
+                        <img class="mr-2" style="width: 1.5rem;" src="img/trial_icon.png" />
+                        Last Trials
+                    </h3>
+                    <div class="d-flex flex-column align-items-center d-md-block">
+                        <button class="btn btn-xs btn-primary mr-2 mt-2 mt-md-0" [enhancedRouterLink]="'/trials'">View all</button>
+                    </div>
+                </div>
             </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table text-nowrap table-sm table-striped table-hover mb-0" style="overflow: hidden;">
+                        <thead>
+                            <tr>
+                                <th style="width: 8rem;" class="text-center px-0">Week</th>
+                                <th>Top 1 solo</th>
+                                <th>Top 1 group</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let trial of dashboardData.lastTrials" [enhancedRouterLink]="'/trials/' + trial.week" role="button" style="height: 2.75rem;">
+                                <td style="vertical-align: middle; width: 8rem;" class="text-center px-2" [title]="trial.behemothName">
+                                    {{trial.week}}
+                                    <img class="ml-1" style="width: 3rem; margin: -0.5rem;" [src]="sharedService.getImgPath(trial.behemothName + '.png', 'behemoths')" />
+                                </td>
+                                <td style="vertical-align: middle;" [title]="sharedService.convertTrialTime(trial.soloCompletionTime, true)">
+                                    {{sharedService.convertTrialTime(trial.soloCompletionTime, sharedService.trialDecimals)}}
+                                </td>
+                                <td style="vertical-align: middle;" [title]="sharedService.convertTrialTime(trial.groupCompletionTime, true)">
+                                    {{sharedService.convertTrialTime(trial.groupCompletionTime, sharedService.trialDecimals)}}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- <div class="card-footer d-flex">
+                <span class="badge badge-secondary ml-auto">Last updated at {{dashboardData.currentGauntletInfo.lastUpdated | date:'YYYY/MM/dd HH:mm'}}</span>
+            </div> -->
         </div>
     </div>
     <!-- <div class="col-xl-6">

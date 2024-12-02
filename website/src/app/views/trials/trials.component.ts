@@ -1,12 +1,13 @@
 import { AfterViewInit, Component } from '@angular/core';
-import { DatabaseService } from '../../services/database.service';
+import { DatabaseService, WEBSITE_TRIAL } from '../../services/database.service';
 import { SharedService } from '../../services/shared.service';
-import { API_TRIAL_LIST, BEHEMOTH, TRIAL_LIST_ITEM } from '../../../../../backend/src/types/types';
+import { BEHEMOTH } from '../../../../../scripts/src/types/types';
 
 @Component({
   selector: 'dl-trials',
   templateUrl: './trials.component.html',
-  styleUrls: ['./trials.component.scss']
+  styleUrls: ['./trials.component.scss'],
+  standalone: false
 })
 export class TrialsComponent implements AfterViewInit {
   constructor(
@@ -20,7 +21,7 @@ export class TrialsComponent implements AfterViewInit {
   }
 
   public behemoths: BEHEMOTH[] = [];
-  public trials: TRIAL_LIST_ITEM[] = [];
+  public trials: WEBSITE_TRIAL[] = [];
   public total: number = 0;
   public isLoading: boolean = true;
   public filters: {
@@ -31,19 +32,30 @@ export class TrialsComponent implements AfterViewInit {
       page: 1
     };
 
-  public async applyFilter() {
+  public applyFilter() {
     this.trials = [];
     this.isLoading = true;
-    const paramsAsString = Object.keys(this.filters).reduce<string[]>((p, k) => { return [...p, `${k}=${(<any>this.filters)[k] || ''}`] }, []).join('&');
-    const response = await this.databaseService.fetch<API_TRIAL_LIST>(`trials?${paramsAsString}`);
+
+    let response = {
+      data: this.databaseService.data.trials,
+      total: 0
+    };
+
+    if (this.filters.behemothId) {
+      response.data = response.data.filter(r => r.behemothName === this.databaseService.data.behemoths[this.filters.behemothId - 1].name);
+    }
+
+    response.total = response.data.length;
+    response.data = response.data.slice(0 + (this.filters.page - 1) * 20, 20 + (this.filters.page - 1) * 20);
+
     if (!response) return;
     this.isLoading = false;
     this.trials = response.data;
     this.total = response.total;
   }
 
-  public async loadBehemoths() {
-    this.behemoths = (await this.databaseService.fetch<BEHEMOTH[]>(`behemoths`)) || [];
+  public loadBehemoths() {
+    this.behemoths = this.databaseService.data.behemoths;
   }
 
   public Number: (str: string) => number = str => Number(str);

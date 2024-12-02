@@ -18,6 +18,11 @@ import { SeasonsComponent } from './views/seasons/seasons.component';
 import { GuildsComponent } from './views/guilds/guilds.component';
 import { GuildDetailComponent } from './views/guilds/guild-detail/guild-detail.component';
 import { DashboardComponent } from './views/dashboard/dashboard.component';
+import { TrialsComponent } from './views/trials/trials.component';
+import { TrialDetailComponent } from './views/trials/trial-detail/trial-detail.component';
+import { PlayersComponent } from './views/players/players.component';
+import { PlayerDetailComponent } from './views/players/player-detail/player-detail.component';
+import { BuilderComponent } from './views/builder/builder.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +40,12 @@ import { DashboardComponent } from './views/dashboard/dashboard.component';
     SeasonsComponent,
     GuildsComponent,
     GuildDetailComponent,
-    DashboardComponent
+    DashboardComponent,
+    TrialsComponent,
+    TrialDetailComponent,
+    PlayersComponent,
+    PlayerDetailComponent,
+    BuilderComponent
   ],
   imports: [
     BrowserModule,

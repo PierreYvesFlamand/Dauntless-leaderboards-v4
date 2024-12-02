@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { DatabaseService } from '../services/database.service';
 
 @Component({
   selector: 'dl-layout',
@@ -6,4 +7,8 @@ import { Component } from '@angular/core';
   styleUrl: './layout.component.scss',
   standalone: false
 })
-export class LayoutComponent { }
+export class LayoutComponent {
+  constructor(
+    public databaseService: DatabaseService
+  ) { }
+}

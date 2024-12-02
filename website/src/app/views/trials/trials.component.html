@@ -47,28 +47,28 @@
                             </td>
                         </tr>
                         <tr *ngFor="let trial of trials" [enhancedRouterLink]="'/trials/' + trial.week" role="button">
-                            <td style="vertical-align: middle; width: 6rem;" class="text-center px-2" [title]="trial.behemoth_name">
+                            <td style="vertical-align: middle; width: 6rem;" class="text-center px-2" [title]="trial.behemothName">
                                 {{trial.week}}
-                                <img class="ml-1" style="width: 3rem; margin: -0.5rem;" [src]="sharedService.getImgPath(trial.behemoth_name + '.png', 'behemoths')" />
+                                <img class="ml-1" style="width: 3rem; margin: -0.5rem;" [src]="sharedService.getImgPath(trial.behemothName + '.png', 'behemoths')" />
                             </td>
-                            <td style="vertical-align: middle;" [title]="sharedService.convertTrialTime(trial.solo_completion_time, true)">
-                                {{sharedService.convertTrialTime(trial.solo_completion_time, sharedService.trialDecimals)}}
-                                <img class="ml-1" style="width: 2rem; margin: -0.1rem;" [src]="sharedService.getImgPath(trial.solo_player[0].weapon_id + '.png', 'weapons')" />
-                                <img class="ml-1" style="width: 2rem; margin: -0.1rem;" *ngIf="trial.solo_player[0].role_id" [src]="sharedService.getImgPath(trial.solo_player[0].role_id + '.png', 'omnicells')" />
+                            <td style="vertical-align: middle;" [title]="sharedService.convertTrialTime(trial.soloCompletionTime, true)">
+                                {{sharedService.convertTrialTime(trial.soloCompletionTime, sharedService.trialDecimals)}}
+                                <img class="ml-1" style="width: 2rem; margin: -0.1rem;" [src]="sharedService.getImgPath(trial.soloPlayer[0].weaponId + '.png', 'weapons')" />
+                                <img class="ml-1" style="width: 2rem; margin: -0.1rem;" *ngIf="trial.soloPlayer[0].roleId" [src]="sharedService.getImgPath(trial.soloPlayer[0].roleId + '.png', 'omnicells')" />
                             </td>
-                            <td style="vertical-align: middle;" [title]="sharedService.convertTrialTime(trial.group_completion_time, true)">
-                                {{sharedService.convertTrialTime(trial.group_completion_time, sharedService.trialDecimals)}}
-                                <ng-container *ngFor="let player of trial.group_players">
-                                    <img class="ml-1" style="width: 2rem; margin: -0.1rem;" [src]="sharedService.getImgPath(player.weapon_id + '.png', 'weapons')" />
-                                    <img class="ml-1" style="width: 2rem; margin: -0.1rem;" *ngIf="player.role_id" [src]="sharedService.getImgPath(player.role_id + '.png', 'omnicells')" />
+                            <td style="vertical-align: middle;" [title]="sharedService.convertTrialTime(trial.groupCompletionTime, true)">
+                                {{sharedService.convertTrialTime(trial.groupCompletionTime, sharedService.trialDecimals)}}
+                                <ng-container *ngFor="let player of trial.groupPlayers">
+                                    <img class="ml-1" style="width: 2rem; margin: -0.1rem;" [src]="sharedService.getImgPath(player.weaponId + '.png', 'weapons')" />
+                                    <img class="ml-1" style="width: 2rem; margin: -0.1rem;" *ngIf="player.roleId" [src]="sharedService.getImgPath(player.roleId + '.png', 'omnicells')" />
                                     <span class="ml-3"></span>
                                 </ng-container>
                             </td>
                             <td style="vertical-align: middle; width: 10rem;">
-                                {{trial.start_at| date:'YYYY MMMM d'}}
+                                {{trial.startAt| date:'YYYY MMMM d'}}
                             </td>
                             <td style="vertical-align: middle; width: 10rem;">
-                                {{trial.end_at| date:'MMMM d'}}
+                                {{trial.endAt| date:'MMMM d'}}
                             </td>
                         </tr>
                     </tbody>

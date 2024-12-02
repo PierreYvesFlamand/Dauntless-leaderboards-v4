@@ -1,16 +1,16 @@
 import { Component } from '@angular/core';
-import { DatabaseService } from '../../../services/database.service';
+import { DatabaseService, WEBSITE_TRIAL } from '../../../services/database.service';
 import { SharedService } from '../../../services/shared.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { API_TRIAL, TRIAL_LEADERBOARD } from '../../../../../../backend/src/types/types';
 
 @Component({
   selector: 'dl-trial-detail',
   templateUrl: './trial-detail.component.html',
-  styleUrl: './trial-detail.component.scss'
+  styleUrl: './trial-detail.component.scss',
+  standalone: false
 })
 export class TrialDetailComponent {
-  public trial?: API_TRIAL;
+  public trial?: WEBSITE_TRIAL;
 
   constructor(
     private databaseService: DatabaseService,
@@ -25,8 +25,8 @@ export class TrialDetailComponent {
     });
   }
 
-  public async fetchData(id: number) {
-    this.trial = await this.databaseService.fetch<API_TRIAL>(`trials/${id}`);
+  public fetchData(id: number) {
+    this.trial = this.databaseService.data.trials[id - 1];
     if (!this.trial) this.router.navigate(['trials']);
   }
 }

@@ -264,6 +264,7 @@ async function refreshSessionToken() {
     }
 }
 
+// 281 is last before dual weapon
 async function fetchTrialLeaderboard(week: number): Promise<DAUNTLESS_TRIAL | null> {
     /**
      * Explanation for posterity
