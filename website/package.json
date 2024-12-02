@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --base-href 'https://pierreyvesflamand.github.io/Dauntless-leaderboards-v4/website/dist/website/browser/'",
+    "build": "ng build --base-href=https://pierreyvesflamand.github.io/Dauntless-leaderboards-v4/website/dist/website/browser/",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
