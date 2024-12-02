@@ -765,7 +765,7 @@ export class DatabaseService {
         this.data.dashboard = {
             currentGauntletInfo: this.data.gauntlets[this.data.gauntlets.length - 1].gauntletInfo,
             currentGauntletLeaderboard: this.data.gauntlets[this.data.gauntlets.length - 1].gauntletLeaderboard.slice(0, 10),
-            lastTrials: this.data.trials.slice(this.data.trials.length - 10, this.data.trials.length)
+            lastTrials: this.data.trials.slice(0, 10)
         }
 
         // Done
