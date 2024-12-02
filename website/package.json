@@ -4,7 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --base-href=https://pierreyvesflamand.github.io/Dauntless-leaderboards-v4/website/dist/website/browser/",
+    "build": "ng build --base-href=/Dauntless-leaderboards-v4/",
+    "deploy": "ng deploy --base-href=/Dauntless-leaderboards-v4/",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
@@ -29,6 +30,7 @@
     "@angular/compiler-cli": "^18.2.0",
     "@types/jasmine": "~5.1.0",
     "@types/pako": "^2.0.3",
+    "angular-cli-ghpages": "^2.0.3",
     "jasmine-core": "~5.2.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",

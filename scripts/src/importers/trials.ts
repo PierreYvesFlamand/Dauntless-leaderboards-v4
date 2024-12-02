@@ -19,7 +19,7 @@ export async function startImportTrials(authorizationCode: string = config.AUTHO
     for (let i = 1; i < getCurrentWeek(); i++) {
         if (existingTrialFilenames.findIndex(filename => Number(filename.substring(10, 13)) === i) >= 0) continue;
         await importTrials(i);
-        await new Promise(resolve => setTimeout(resolve, 2000));
+        await new Promise(resolve => setTimeout(resolve, 3000));
     }
     console.log('Starting current week import');
     await importTrials();

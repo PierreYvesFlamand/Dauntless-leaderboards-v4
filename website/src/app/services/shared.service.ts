@@ -16,8 +16,8 @@ export class SharedService {
         this.updatePlayerId(this.localstorageService.getByKey<number>('player-id'));
         this.updateGuildId(this.localstorageService.getByKey<number>('guild-id'));
         this.updateTrialDecimals(this.localstorageService.getByKey<number>('trial-decimals'));
-        this.updateFavoriteGuilds(this.localstorageService.getByKey<number[]>('favorite-guilds'));
-        this.updateFavoritePlayers(this.localstorageService.getByKey<number[]>('favorite-players'));
+        this.updateFavoriteGuilds(this.localstorageService.getByKey<number[]>('fav-guilds'));
+        this.updateFavoritePlayers(this.localstorageService.getByKey<number[]>('fav-players'));
     }
 
     // Theme
@@ -75,17 +75,17 @@ export class SharedService {
     private favoriteGuildsSubject = new BehaviorSubject<number[]>([]);
     favoriteGuilds$ = this.favoriteGuildsSubject.asObservable();
     updateFavoriteGuilds(value: number[]) {
-        this.localstorageService.setByKey('favorite-guilds', value);
+        this.localstorageService.setByKey('fav-guilds', value);
         this.favoriteGuildsSubject.next(value);
     }
     addFavoriteGuilds(value: number) {
         const newArray = [...this.favoriteGuilds, value];
-        this.localstorageService.setByKey('favorite-guilds', newArray);
+        this.localstorageService.setByKey('fav-guilds', newArray);
         this.favoriteGuildsSubject.next(newArray);
     }
     removeFavoriteGuilds(value: number) {
         const newArray = this.favoriteGuilds.filter(v => v !== value);
-        this.localstorageService.setByKey('favorite-guilds', newArray);
+        this.localstorageService.setByKey('fav-guilds', newArray);
         this.favoriteGuildsSubject.next(newArray);
     }
     hasFavoriteGuild(value: number): boolean {
@@ -104,17 +104,17 @@ export class SharedService {
     private favoritePlayersSubject = new BehaviorSubject<number[]>([]);
     favoritePlayers$ = this.favoritePlayersSubject.asObservable();
     updateFavoritePlayers(value: number[]) {
-        this.localstorageService.setByKey('favorite-players', value);
+        this.localstorageService.setByKey('fav-players', value);
         this.favoritePlayersSubject.next(value);
     }
     addFavoritePlayers(value: number) {
         const newArray = [...this.favoritePlayers, value];
-        this.localstorageService.setByKey('favorite-players', newArray);
+        this.localstorageService.setByKey('fav-players', newArray);
         this.favoritePlayersSubject.next(newArray);
     }
     removeFavoritePlayers(value: number) {
         const newArray = this.favoritePlayers.filter(v => v !== value);
-        this.localstorageService.setByKey('favorite-players', newArray);
+        this.localstorageService.setByKey('fav-players', newArray);
         this.favoritePlayersSubject.next(newArray);
     }
     hasFavoritePlayer(value: number): boolean {
